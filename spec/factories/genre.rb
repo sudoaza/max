@@ -7,5 +7,9 @@ FactoryGirl.define do
         create_list(:song, 3, genre: genre)
       end
     end
+
+    trait :rock do
+      name "Rock"
+    end
   end
 end

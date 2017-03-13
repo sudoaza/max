@@ -12,9 +12,7 @@ RSpec.describe Genre, type: :model do
   end
 
   it 'has songs' do
-    g = create :genre
-    g.songs << create(:song)
-    g.songs << create(:song, :different)
+    g = create :genre, :with_songs, songs_count: 2
     expect(g.songs.count).to eq(2)
     expect(g.songs.first).to be_a(Song)
   end

@@ -4,8 +4,12 @@ FactoryGirl.define do
     bio 'Some bio text goes here'
 
     trait :with_songs do
+      transient do
+        songs_count 5
+      end
+
       after(:create) do |artist, evaluator|
-        songs { create_list :song, 3 }
+        create_list :song, evaluator.songs_count, artist: artist
       end
     end
   end

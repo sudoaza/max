@@ -12,5 +12,13 @@ FactoryGirl.define do
       name "House of the Rising Sun"
       association :genre, :rock
     end
+
+    trait :with_artist do
+      association :artist
+    end
+
+    trait :with_album do
+      association :album
+    end
   end
 end

@@ -7,8 +7,8 @@ RSpec.describe Genre, type: :model do
   end
 
   it 'requires a name' do
-    g = create :genre, name: nil
-    expect(g.valid?).to be_falsey
+    g = build :genre, name: nil
+    expect(g).to_not be_valid
   end
 
   it 'has songs' do

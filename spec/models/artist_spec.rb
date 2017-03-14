@@ -7,7 +7,7 @@ RSpec.describe Artist, type: :model do
   end
 
   it 'requires name' do
-    a = create :artist, name: nil
+    a = build :artist, name: nil
     expect(a).to_not be_valid
   end
 

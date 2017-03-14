@@ -7,7 +7,7 @@ RSpec.describe Playlist, type: :model do
   end
 
   it 'requires a name' do
-    playlist = create :playlist, name: nil
+    playlist = build :playlist, name: nil
     expect(playlist).to_not be_valid
   end
 

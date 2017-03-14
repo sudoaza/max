@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Album, type: :model do
   it 'has a name' do
-    a = create(:album, name: 'Some name')
+    a = create :album, name: 'Some name'
     expect(a.name).to eq('Some name')
   end
 
   it 'requires a name' do
-    a = create(:album, name: nil)
+    a = build :album, name: nil
     expect(a).to_not be_valid
   end
 

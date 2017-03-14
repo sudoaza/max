@@ -8,23 +8,28 @@ RSpec.describe Song, type: :model do
   end
 
   it 'requires a name' do
-    s = create :song, name: nil
-    expect(s.valid?).to be_falsey
+    s = build :song, name: nil
+    expect(s).to_not be_valid
   end
 
   it 'requires a duration' do
-    s = create :song, duration: nil
-    expect(s.valid?).to be_falsey
+    s = build :song, duration: nil
+    expect(s).to_not be_valid
   end
 
   it 'is not valid if duration is not numeric' do
-    s = create :song, duration: 'bad'
-    expect(s.valid?).to be_falsey
+    s = build :song, duration: 'bad'
+    expect(s).to_not be_valid
   end
 
   it 'is not valid if duration is zero or less' do
-    s = create :song, duration: -1
-    expect(s.valid?).to be_falsey
+    s = build :song, duration: -1
+    expect(s).to_not be_valid
+  end
+
+  it 'is not valid with fractional duration' do
+    s = build :song, duration: 123.5
+    expect(s).to_not be_valid
   end
 
   it 'can have a genre' do

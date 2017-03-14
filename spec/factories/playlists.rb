@@ -8,7 +8,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |playlist, evaluator|
-        songs { create_list :song, songs_count }
+        create_list :playlist_song, evaluator.songs_count, playlist: playlist
       end
     end
   end

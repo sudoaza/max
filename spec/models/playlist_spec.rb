@@ -13,7 +13,7 @@ RSpec.describe Playlist, type: :model do
 
   it 'has songs' do
     playlist = create :playlist, :with_songs, songs_count: 4
-    expect(g.songs.count).to eq(4)
-    expect(g.songs.first).to be_a(Song)
+    expect(playlist.songs.count).to eq(4)
+    expect(playlist.songs.first).to be_a(Song)
   end
 end

@@ -23,6 +23,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# API
+gem 'grape'
+gem 'grape-active_model_serializers'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.5'

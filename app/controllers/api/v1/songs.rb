@@ -5,8 +5,11 @@ module API
 
       resource :songs do
         desc "Create a song"
+        params do
+          requires :name, type: String, desc: "Name of the song"
+        end
         post "", root: :songs do
-          Song.create(permitted_params)
+          Song.create!(permitted_params)
         end
 
         desc "Delete a song"
@@ -18,8 +21,12 @@ module API
         end
 
         desc "Update an song"
+        params do
+          requires :id, type: Integer, desc: "ID of the song"
+          optional :name, type: String, desc: "Name of the song"
+        end
         put ":id", root: :songs do
-          Album.find(permitted_params[:id]).update(permitted_params)
+          Song.find(permitted_params[:id]).update!(permitted_params)
         end
       end
     end

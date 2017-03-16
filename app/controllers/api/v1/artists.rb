@@ -14,7 +14,7 @@ module API
         end
 
         desc "Get artists list"
-        get "", root: :artist do
+        get "", root: :artists do
           Artist.all
         end
 
@@ -22,7 +22,7 @@ module API
         params do
           requires :id, type: Integer, desc: "ID of the artist"
         end
-        get ":id", root: :artist do
+        get ":id", root: :artists do
           Artist.find(permitted_params[:id])
         end
 
@@ -36,6 +36,7 @@ module API
 
         desc "Update an artist"
         params do
+          requires :id, type: Integer, desc: "ID of the artist"
           optional :name, type: String, desc: "Name of the artist"
           optional :bio, type: String, desc: "Biography of the artist"
         end

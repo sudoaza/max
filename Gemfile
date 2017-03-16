@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # API
 gem 'grape'
 gem 'grape-active_model_serializers'
+gem 'hashie-forbidden_attributes'
 
 group :development, :test do
   gem 'byebug'

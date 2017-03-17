@@ -4,11 +4,28 @@ module API
       include API::V1::Defaults
 
       resource :albums do
+        before do
+          @album = Album.find(params[:id]) if params[:id]
+        end
+
+        desc 'Get albums list'
+        get do
+          Album.all
+        end
+
+        desc 'Get an album'
+        params do
+          requires :id, type: Integer, desc: "ID of the album"
+        end
+        get ':id' do
+          @album
+        end
+
         desc "Create an album"
         params do
           requires :name, type: String, desc: "Name of the album"
         end
-        post "", root: :albums do
+        post do
           Album.create!(permitted_params)
         end
 
@@ -16,8 +33,8 @@ module API
         params do
           requires :id, type: Integer, desc: "ID of the album"
         end
-        delete ":id", root: :albums do
-          Album.find(permitted_params[:id]).destroy
+        delete ":id" do
+          @album.destroy!
         end
 
         desc "Update an album"
@@ -25,8 +42,8 @@ module API
           requires :id, type: Integer, desc: "ID of the album"
           optional :name, type: String, desc: "Name of the album"
         end
-        put ":id", root: :albums do
-          Album.find(permitted_params[:id]).update!(permitted_params)
+        put ":id" do
+          @album.update!(permitted_params)
         end
 
         desc "Add a song to an album"
@@ -34,9 +51,9 @@ module API
           requires :id, type: Integer, desc: "ID of the album"
           requires :song_id, type: Integer, desc: "ID of the song"
         end
-        put ":id/add_song", root: :albums do
-          Album.find(permitted_params[:id]).songs <<
-              Song.find(permitted_params[:song_id])
+        put ":id/add_song" do
+          @album.songs << Song.find(permitted_params[:song_id])
+          @album.save!
         end
 
         desc "Remove a song from an album"
@@ -44,9 +61,9 @@ module API
           requires :id, type: Integer, desc: "ID of the album"
           requires :song_id, type: Integer, desc: "ID of the song"
         end
-        put ":id/remove_song", root: :albums do
-          Album.find(permitted_params[:id]).songs.delete(
-              Song.find(permitted_params[:song_id]))
+        put ":id/remove_song" do
+          @album.songs.delete(Song.find(permitted_params[:song_id]))
+          @album.save!
         end
       end
     end

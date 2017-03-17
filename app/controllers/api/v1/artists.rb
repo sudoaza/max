@@ -13,12 +13,12 @@ module API
           requires :name, type: String, desc: "Name of the artist"
           optional :bio, type: String, desc: "Biography of the artist"
         end
-        post "", root: :artists do
+        post do
           Artist.create!(permitted_params)
         end
 
         desc "Get artists list"
-        get "", root: :artists do
+        get do
           Artist.all
         end
 
@@ -26,7 +26,7 @@ module API
         params do
           requires :id, type: Integer, desc: "ID of the artist"
         end
-        get ":id", root: :artists do
+        get ":id" do
           @artist
         end
 
@@ -34,7 +34,7 @@ module API
         params do
           requires :id, type: Integer, desc: "ID of the artist"
         end
-        delete ":id", root: :artists do
+        delete ":id" do
           @artist.destroy!
         end
 
@@ -44,7 +44,7 @@ module API
           optional :name, type: String, desc: "Name of the artist"
           optional :bio, type: String, desc: "Biography of the artist"
         end
-        put ":id", root: :artists do
+        put ":id" do
           @artist.update!(permitted_params)
         end
 
@@ -53,7 +53,7 @@ module API
           requires :id, type: Integer, desc: "ID of the artist"
           requires :song_id, type: Integer, desc: "ID of the song"
         end
-        put ":id/add_song", root: :artists do
+        put ":id/add_song" do
           @artist.songs << Song.find(permitted_params[:song_id])
           @artist.save!
         end
@@ -63,7 +63,7 @@ module API
           requires :id, type: Integer, desc: "ID of the artist"
           requires :song_id, type: Integer, desc: "ID of the song"
         end
-        put ":id/remove_song", root: :artists do
+        put ":id/remove_song" do
           @artist.songs.delete(Song.find(permitted_params[:song_id]))
           @artist.save!
         end
@@ -73,7 +73,7 @@ module API
           requires :id, type: Integer, desc: "ID of the artist"
           requires :album_id, type: Integer, desc: "ID of the album"
         end
-        put ":id/add_album", root: :artists do
+        put ":id/add_album" do
           @artist.albums << Album.find(permitted_params[:album_id])
           @artist.save!
         end
@@ -83,7 +83,7 @@ module API
           requires :id, type: Integer, desc: "ID of the artist"
           requires :album_id, type: Integer, desc: "ID of the album"
         end
-        put ":id/remove_album", root: :artists do
+        put ":id/remove_album" do
           @artist.albums.delete(Album.find(permitted_params[:album_id]))
           @artist.save!
         end

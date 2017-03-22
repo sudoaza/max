@@ -1,6 +1,7 @@
 require 'factory_girl_rails'
 require 'support/factory_girl'
 require 'support/api_helpers'
+require 'paperclip/matchers'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -11,7 +12,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.include ApiHelpers
-
   config.shared_context_metadata_behavior = :apply_to_host_groups
+  config.include ApiHelpers
+  config.include Paperclip::Shoulda::Matchers
 end

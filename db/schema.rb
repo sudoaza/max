@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313222044) do
+ActiveRecord::Schema.define(version: 20170322070425) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 20170313222044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "arts", force: :cascade do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_fingerprint"
+  end
+
+  add_index "arts", ["image_fingerprint"], name: "index_arts_on_image_fingerprint", unique: true
 
   create_table "genres", force: :cascade do |t|
     t.string   "name"

@@ -5,7 +5,7 @@ module API
 
       helpers do
         def must_have_image!
-          throw :error, message: "Must have image", status: 422 unless params.image
+          throw :error, message: "Must have image", status: 422 unless permitted_params.image
         end
       end
 

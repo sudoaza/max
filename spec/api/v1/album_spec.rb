@@ -13,6 +13,15 @@ describe API::V1::Albums do
         }.to change{ Album.count }.by(1)
         expect(response.status).to eq(201)
       end
+      it 'with art' do
+        art = create :art
+        subject_params[:art_id] = art.id
+        expect {
+          post url, subject_params.to_json, json_request
+        }.to change{ Album.count }.by(1)
+        expect(response.status).to eq(201)
+        expect(Album.last.art).to eq(art)
+      end
     end
     context 'failing' do
       it "if trying to create without a name" do
@@ -52,6 +61,13 @@ describe API::V1::Albums do
         subject.reload
         expect(subject.name).to eq('new name')
       end
+      it 'updates the art' do
+        art = create :art
+        put url, {art_id: art.id}.to_json, json_request
+        expect(response.status).to eq(200)
+        subject.reload
+        expect(subject.art).to eq(art)
+      end
     end
     context 'failing' do
       it "if updating an album doesn't exist" do
@@ -61,6 +77,10 @@ describe API::V1::Albums do
       it "if trying to update without a name" do
         put url, {name: ''}.to_json, json_request
         expect(response.status).to eq(422)
+      end
+      it 'without a valid art' do
+        put url, {art_id: '1234'}.to_json, json_request
+        expect(response.status).to eq(404)
       end
     end
   end

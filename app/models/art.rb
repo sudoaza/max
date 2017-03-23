@@ -1,4 +1,6 @@
 class Art < ActiveRecord::Base
+  has_many :albums
+
   has_attached_file :image,
       styles: { medium: ["300x300>", :png], thumb: ["100x100#", :png] }
   validates_attachment :image, presence: true,

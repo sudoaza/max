@@ -17,7 +17,7 @@ module API
         end
         post do
           must_have_image!
-          Art.create! image: ActionDispatch::Http::UploadedFile.new(params.image)
+          Art.create! image: ActionDispatch::Http::UploadedFile.new(permitted_params.image)
         end
 
         desc "Get art by id or fingerprint"
@@ -26,7 +26,7 @@ module API
               desc: "ID of the art or MD5 fingerprint of the image file"
         end
         get ':id_or_fingerprint' do
-          Art.by_id_or_fingerprint(params[:id_or_fingerprint]).first!
+          Art.by_id_or_fingerprint(permitted_params[:id_or_fingerprint]).first!
         end
 
       end

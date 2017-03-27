@@ -6,20 +6,25 @@ describe API::V1::Arts do
   let(:serializable) { ArtSerializer.new(subject) }
 
   describe 'creating' do
+    let(:ok_file) { Rack::Test::UploadedFile.new('spec/files/ok_cover.jpg', 'image/jpeg') }
+    let(:wrong_type_file) { Rack::Test::UploadedFile.new('spec/files/text.jpg', 'image/jpeg') }
+    let(:wrong_ext_file) { Rack::Test::UploadedFile.new('spec/files/image.txt', 'image/jpeg') }
+
     context 'works' do
       it 'has an ok file' do
-        post url, image: Rack::Test::UploadedFile.new('spec/files/ok_cover.jpg', 'image/jpeg')
+        post url, image: ok_file
         expect(response.status).to eq(201)
       end
     end
+
     context 'fails' do
       it 'has a too big file'
       it 'has a file of the wrong type' do
-        post url, image: Rack::Test::UploadedFile.new('spec/files/text.jpg', 'image/jpeg')
+        post url, image: wrong_type_file
         expect(response.status).to eq(422)
       end
       it 'has a file of the wrong extension' do
-        post url, image: Rack::Test::UploadedFile.new('spec/files/image.txt', 'image/jpeg')
+        post url, image: wrong_ext_file
         expect(response.status).to eq(422)
       end
       it 'sends no file' do
@@ -27,9 +32,9 @@ describe API::V1::Arts do
         expect(response.status).to eq(422)
       end
       it 'sends a file thats already uploaded' do
-        post url, image: Rack::Test::UploadedFile.new('spec/files/ok_cover.jpg', 'image/jpeg')
+        post url, image: ok_file
         expect(response.status).to eq(201)
-        post url, image: Rack::Test::UploadedFile.new('spec/files/ok_cover.jpg', 'image/jpeg')
+        post url, image: ok_file
         expect(response.status).to eq(422)
       end
     end

@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
+ruby '2.2.5'
+
 gem 'rails', '4.2.4'
-gem 'sqlite3'
+gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -27,6 +29,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'grape'
 gem 'grape-active_model_serializers'
 gem 'hashie-forbidden_attributes'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
 
 gem 'paperclip'
 
@@ -41,3 +45,5 @@ group :development do
   gem 'spring'
 end
 
+# heroku
+gem 'rails_12factor', group: :production

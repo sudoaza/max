@@ -76,4 +76,6 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  GrapeSwaggerRails.options.app_url  = 'https://obscure-ocean-37336.herokuapp.com'
 end

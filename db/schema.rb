@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328044739) do
+ActiveRecord::Schema.define(version: 20170328215751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20170328044739) do
     t.datetime "updated_at", null: false
     t.integer  "art_id"
   end
+
+  add_index "albums", ["art_id"], name: "index_albums_on_art_id", using: :btree
+  add_index "albums", ["artist_id"], name: "index_albums_on_artist_id", using: :btree
 
   create_table "artists", force: :cascade do |t|
     t.string   "name"
@@ -50,6 +53,9 @@ ActiveRecord::Schema.define(version: 20170328044739) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "featureds", ["art_id"], name: "index_featureds_on_art_id", using: :btree
+  add_index "featureds", ["song_id"], name: "index_featureds_on_song_id", using: :btree
+
   create_table "genres", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -62,6 +68,9 @@ ActiveRecord::Schema.define(version: 20170328044739) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "playlist_songs", ["playlist_id"], name: "index_playlist_songs_on_playlist_id", using: :btree
+  add_index "playlist_songs", ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
 
   create_table "playlists", force: :cascade do |t|
     t.string   "name"

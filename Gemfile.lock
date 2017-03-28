@@ -92,6 +92,10 @@ GEM
     grape-active_model_serializers (1.5.0)
       active_model_serializers (>= 0.10.0)
       grape (>= 0.8.0)
+    grape-swagger (0.25.3)
+      grape (>= 0.12.0)
+    grape-swagger-rails (0.3.0)
+      railties (>= 3.2.12)
     hashie (3.5.5)
     hashie-forbidden_attributes (0.1.1)
       hashie (>= 3.0)
@@ -234,6 +238,8 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   grape
   grape-active_model_serializers
+  grape-swagger
+  grape-swagger-rails
   hashie-forbidden_attributes
   jbuilder (~> 2.0)
   jquery-rails

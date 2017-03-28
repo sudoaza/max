@@ -29,6 +29,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'grape'
 gem 'grape-active_model_serializers'
 gem 'hashie-forbidden_attributes'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
 
 gem 'paperclip'
 

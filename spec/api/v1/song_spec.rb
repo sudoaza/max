@@ -86,4 +86,68 @@ describe API::V1::Songs do
       end
     end
   end
+
+  describe 'featured fields' do
+    let(:art) { Art.first || create(:art) }
+
+    context 'creating' do
+      let(:url) { "/api/v1/songs" }
+
+      context 'succeeding' do
+        it 'can create with featured fields' do
+          expect {
+            subject_params[:featured_attributes] = {art_id: art.id, history: 'some history'}
+            post url, subject_params.to_json, json_request
+          }.to change{ Featured.count }.by(1)
+          expect(response.status).to eq(201)
+        end
+        it 'can create without a history' do
+          expect {
+            subject_params[:featured_attributes] = {art_id: art.id}
+            post url, subject_params.to_json, json_request
+          }.to change{ Featured.count }.by(1)
+          expect(response.status).to eq(201)
+        end
+      end
+
+      context 'failing' do
+        it 'cant create with an unexisting art' do
+          subject_params[:featured_attributes] = {art_id: 987, history: 'some history'}
+          post url, subject_params.to_json, json_request
+          expect(response.status).to eq(422)
+        end
+      end
+    end
+
+    context 'updating' do
+      let(:featured_subject) { create(:song, :is_featured) }
+      let(:url) { "/api/v1/songs/#{featured_subject.id}" }
+
+      context 'succeeding' do
+        it 'can update featured art' do
+          put url, {featured_attributes: {art_id: art.id}}.to_json, json_request
+          expect(response.status).to eq(200)
+        end
+        it 'can update featured history' do
+          put url, {featured_attributes: {history: 'history updated'}}.to_json, json_request
+          expect(response.status).to eq(200)
+        end
+        it 'can update with empty featured history' do
+          put url, {featured_attributes: {history: nil}}.to_json, json_request
+          expect(response.status).to eq(200)
+        end
+      end
+
+      context 'failing' do
+        it 'cant update with an unexisting art' do
+          put url, {featured_attributes: {art_id: 456}}.to_json, json_request
+          expect(response.status).to eq(422)
+        end
+        it 'cant update without art' do
+          put url, {featured_attributes: {art_id: nil}}.to_json, json_request
+          expect(response.status).to eq(422)
+        end
+      end
+    end
+  end
 end

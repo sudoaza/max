@@ -22,7 +22,9 @@ FactoryGirl.define do
     end
 
     trait :is_featured do
-      association :featured
+      after(:create) do |song, evaluator|
+        song.featured= create(:featured, song: song)
+      end
     end
   end
 end

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20170328044739) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "albums", force: :cascade do |t|
     t.string   "name"
     t.integer  "artist_id"
@@ -37,7 +40,7 @@ ActiveRecord::Schema.define(version: 20170328044739) do
     t.string   "image_fingerprint"
   end
 
-  add_index "arts", ["image_fingerprint"], name: "index_arts_on_image_fingerprint", unique: true
+  add_index "arts", ["image_fingerprint"], name: "index_arts_on_image_fingerprint", unique: true, using: :btree
 
   create_table "featureds", force: :cascade do |t|
     t.string   "history"
@@ -76,8 +79,12 @@ ActiveRecord::Schema.define(version: 20170328044739) do
     t.integer  "artist_id"
   end
 
-  add_index "songs", ["album_id"], name: "index_songs_on_album_id"
-  add_index "songs", ["artist_id"], name: "index_songs_on_artist_id"
-  add_index "songs", ["genre_id"], name: "index_songs_on_genre_id"
+  add_index "songs", ["album_id"], name: "index_songs_on_album_id", using: :btree
+  add_index "songs", ["artist_id"], name: "index_songs_on_artist_id", using: :btree
+  add_index "songs", ["genre_id"], name: "index_songs_on_genre_id", using: :btree
 
+  add_foreign_key "albums", "arts"
+  add_foreign_key "songs", "albums"
+  add_foreign_key "songs", "artists"
+  add_foreign_key "songs", "genres"
 end

@@ -20,5 +20,9 @@ FactoryGirl.define do
     trait :with_album do
       association :album
     end
+
+    trait :is_featured do
+      association :featured
+    end
   end
 end

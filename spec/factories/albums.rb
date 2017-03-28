@@ -11,5 +11,11 @@ FactoryGirl.define do
         create_list :song, evaluator.songs_count, album: album
       end
     end
+
+    trait :with_art do
+      after(:create) do |album, evaluator|
+        album.art= create(:art)
+      end
+    end
   end
 end

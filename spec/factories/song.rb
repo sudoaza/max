@@ -20,5 +20,11 @@ FactoryGirl.define do
     trait :with_album do
       association :album
     end
+
+    trait :is_featured do
+      after(:create) do |song, evaluator|
+        song.featured= create(:featured, song: song)
+      end
+    end
   end
 end

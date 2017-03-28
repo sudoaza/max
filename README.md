@@ -20,3 +20,7 @@ bin/rake spec
 ## Demo
 
 https://obscure-ocean-37336.herokuapp.com
+
+## API Documentation
+
+https://obscure-ocean-37336.herokuapp.com/documentation

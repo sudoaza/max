@@ -4,4 +4,5 @@ class Album < ActiveRecord::Base
   belongs_to :art
 
   validates :name, presence: true
+  validates :artist, presence: true
 end

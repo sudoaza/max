@@ -30,6 +30,7 @@ module API
         desc "Create an album"
         params do
           requires :name, type: String, desc: "Name of the album"
+          requires :artist_id, type: Integer, desc: "ID of the artist for album"
           optional :art_id, type: Integer, desc: "ID of the art for album"
         end
         post do
@@ -50,6 +51,7 @@ module API
           requires :id, type: Integer, desc: "ID of the album"
           optional :name, type: String, desc: "Name of the album"
           optional :art_id, type: Integer, desc: "ID of the art for album"
+          optional :artist_id, type: Integer, desc: "ID of the artist for album"
         end
         put ":id" do
           validate_art_existence!

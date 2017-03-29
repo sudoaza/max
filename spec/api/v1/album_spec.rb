@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe API::V1::Albums do
   let(:subject) { create(:album) }
-  let(:subject_params) { build(:album).slice(:name) }
+  let(:subject_params) { build(:album).slice(:name, :artist_id) }
 
   describe 'creating' do
     let(:url) { '/api/v1/albums' }
@@ -25,7 +25,7 @@ describe API::V1::Albums do
     end
     context 'failing' do
       it "if trying to create without a name" do
-        post url, {name: ''}.to_json, json_request
+        post url, {name: '', artist_id: subject.artist_id}.to_json, json_request
         expect(response.status).to eq(422)
       end
     end

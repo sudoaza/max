@@ -12,6 +12,7 @@ module API
         params do
           requires :name, type: String, desc: "Name of the song"
           requires :duration, type: Integer, desc: "Duration of the song"
+          optional :genre_id, type: Integer, desc: "ID of the genre"
           optional :featured_attributes, type: Hash do
             requires :art_id, type: Integer, desc: "ID of the Art for the featured song"
             optional :history, type: String, desc: "History for the featured song"
@@ -42,6 +43,7 @@ module API
           requires :id, type: Integer, desc: "ID of the song"
           optional :name, type: String, desc: "Name of the song"
           optional :duration, type: Integer, desc: "Duration of the song"
+          optional :genre_id, type: Integer, desc: "ID of the genre"
           optional :featured_attributes, type: Hash do
             optional :art_id, type: Integer, desc: "ID of the Art for the featured song"
             optional :history, type: String, desc: "History for the featured song"

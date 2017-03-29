@@ -119,6 +119,9 @@ RSpec.describe Song, type: :model do
       it 'show_artist' do
         expect(serialized[:show_artist][:id]).to_not be_nil
       end
+      it 'genre name' do
+        expect(serialized[:genre][:name]).to_not be_nil
+      end
       it 'album' do
         expect(serialized[:album][:id]).to_not be_nil
       end

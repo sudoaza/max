@@ -8,6 +8,7 @@ module API
       mount API::V1::Songs
       mount API::V1::Playlists
       mount API::V1::Arts
+      mount API::V1::Genres
 
       add_swagger_documentation(
         api_version: "v1",

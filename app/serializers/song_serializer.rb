@@ -3,11 +3,7 @@ class SongSerializer < ActiveModel::Serializer
 
   belongs_to :show_artist, serializer: ArtistSerializer
   belongs_to :album, serializer: AlbumSerializer
-  belongs_to :genre
-
-  class GenreSerializer < ActiveModel::Serializer
-    attributes :name
-  end
+  belongs_to :genre, serializer: GenreSerializer
 
   has_one :featured
 

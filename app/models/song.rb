@@ -10,11 +10,29 @@ class Song < ActiveRecord::Base
   validates :duration, presence: true, numericality: {
     only_integer: true, greater_than: 0 }
 
-  validates_associated :featured, presence: true, if: :featured?
-
+  validates_associated :featured, if: :featured?
   accepts_nested_attributes_for :featured, update_only: true
+
+  validates :artist, absence: true, if: :has_album?
+  validates :album, absence: true, if: :has_artist?
 
   def featured?
     featured.present?
+  end
+  def has_album?
+    album.present?
+  end
+  def has_artist?
+    artist.present?
+  end
+  def show_artist
+    return album.artist if has_album?
+    artist
+  end
+
+  private
+  # To avoid confusions and get always the proper artist
+  def artist
+    super
   end
 end

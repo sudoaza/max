@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :album do
     name 'Album name'
+    association :artist
 
     trait :with_songs do
       transient do

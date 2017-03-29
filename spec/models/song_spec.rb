@@ -37,18 +37,62 @@ RSpec.describe Song, type: :model do
     expect(song.genre).to be_a(Genre)
   end
 
-  it 'can have an artist' do
-    song = create :song, :with_artist
-    expect(song.artist).to be_a(Artist)
+  context 'has artist directly' do
+    let(:song) { create :song, :with_artist }
+    it 'is private' do
+       expect { song.artist }.to raise_error(NoMethodError)
+    end
+    it 'has an Artist' do
+      expect(song.show_artist).to be_a(Artist)
+    end
+    it 'is valid' do
+      expect(song).to be_valid
+    end
+    it 'persistes the artist' do
+      artist = song.show_artist
+      song.reload
+      expect(song.show_artist).to eq(artist)
+    end
+    context 'receives an album' do
+      let(:album) { create :album }
+      it 'is invalid' do
+        song.album = album
+        expect(song).to_not be_valid
+      end
+      it 'is valid if you unset the artist' do
+        song.artist = nil
+        song.album = album
+        expect(song).to be_valid
+      end
+    end
   end
 
-  it 'can have an album' do
-    song = create :song, :with_album
-    expect(song.album).to be_a(Album)
+  context 'has artist through album' do
+    let(:song) {create :song, :with_album}
+    it 'has an Album' do
+      expect(song.album).to be_a(Album)
+    end
+    it 'is valid' do
+      expect(song).to be_valid
+    end
+    it 'persistes the album' do
+      album = song.album
+      song.reload
+      expect(song.album).to eq(album)
+    end
+    context 'receives an artist' do
+      let(:artist) { create :artist }
+      it 'is invalid' do
+        song.artist = artist
+        expect(song).to_not be_valid
+      end
+      it 'is valid if you unset the album' do
+        song.album = nil
+        song.artist = artist
+        expect(song).to be_valid
+      end
+    end
   end
-
-  it 'cant have both artist and album'
-  it 'has the artist of the album'
 
   context 'featured' do
     let(:song) { song = create :song, :is_featured }
@@ -59,6 +103,31 @@ RSpec.describe Song, type: :model do
     it 'is optionally featured' do
       song.featured.delete
       expect(song).to be_valid
+    end
+  end
+
+  describe 'serializer' do
+    let(:subject) { create :song, :rock, :with_album, :is_featured }
+    let(:serialized) { SongSerializer.new(subject).as_json }
+    context 'has field' do
+      it 'name' do
+        expect(serialized[:name]).to_not be_nil
+      end
+      it 'duration' do
+        expect(serialized[:duration]).to_not be_nil
+      end
+      it 'show_artist' do
+        expect(serialized[:show_artist][:id]).to_not be_nil
+      end
+      it 'album' do
+        expect(serialized[:album][:id]).to_not be_nil
+      end
+      it 'featured history' do
+        expect(serialized[:featured][:history]).to_not be_nil
+      end
+      it 'featured art' do
+        expect(serialized[:featured][:art][:id]).to_not be_nil
+      end
     end
   end
 end

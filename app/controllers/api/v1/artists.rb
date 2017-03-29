@@ -48,26 +48,6 @@ module API
           @artist.update!(permitted_params)
         end
 
-        desc "Add a song to an artist"
-        params do
-          requires :id, type: Integer, desc: "ID of the artist"
-          requires :song_id, type: Integer, desc: "ID of the song"
-        end
-        put ":id/add_song" do
-          @artist.songs << Song.find(permitted_params[:song_id])
-          @artist.save!
-        end
-
-        desc "Remove a song from an artist"
-        params do
-          requires :id, type: Integer, desc: "ID of the artist"
-          requires :song_id, type: Integer, desc: "ID of the song"
-        end
-        put ":id/remove_song" do
-          @artist.songs.delete(Song.find(permitted_params[:song_id]))
-          @artist.save!
-        end
-
         desc "Add an album to an artist"
         params do
           requires :id, type: Integer, desc: "ID of the artist"

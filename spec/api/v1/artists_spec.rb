@@ -125,44 +125,4 @@ describe API::V1::Artists do
       end
     end
   end
-
-  describe 'adding a song' do
-    let(:url) { "/api/v1/artists/#{subject.id}/add_song" }
-    context 'works' do
-      it 'if both exist' do
-        song = create(:song)
-        put url, {song_id: song.id}.to_json, json_request
-        subject.reload
-        expect(subject.songs).to include(song)
-        expect(response.status).to eq(200)
-      end
-    end
-    context 'failing' do
-      it "if trying to add a non existing unpublished song" do
-        put url, {song_id: 321}.to_json, json_request
-        expect(response.status).to eq(404)
-      end
-    end
-  end
-
-  describe 'removing a song' do
-    let(:url) { "/api/v1/artists/#{subject.id}/remove_song" }
-    context 'works' do
-      it "if trying to remove a related unpublished song" do
-        song = create :song
-        subject.songs << song
-        subject.save
-        put url, {song_id: song.id}.to_json, json_request
-        subject.reload
-        expect(subject.songs).not_to include(song)
-        expect(response.status).to eq(200)
-      end
-    end
-    context 'failing' do
-      it "if trying to remove a non related unpublished song" do
-        put url, {song_id: 321}.to_json, json_request
-        expect(response.status).to eq(404)
-      end
-    end
-  end
 end

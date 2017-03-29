@@ -1,5 +1,13 @@
 class SongSerializer < ActiveModel::Serializer
-  attributes :id, :name, :duration, :show_artist, :album, :created_at, :updated_at
+  attributes :id, :name, :duration, :created_at, :updated_at
+
+  belongs_to :show_artist, serializer: ArtistSerializer
+  belongs_to :album, serializer: AlbumSerializer
+  belongs_to :genre
+
+  class GenreSerializer < ActiveModel::Serializer
+    attributes :name
+  end
 
   has_one :featured
 

@@ -53,6 +53,9 @@ RSpec.describe Album, type: :model do
       it 'art' do
         expect(serialized[:art][:id]).to_not be_nil
       end
+      it 'artist' do
+        expect(serialized[:artist][:id]).to_not be_nil
+      end
     end
   end
 end

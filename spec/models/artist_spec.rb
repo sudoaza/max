@@ -21,4 +21,25 @@ RSpec.describe Artist, type: :model do
     expect(a.songs.count).to eq(5)
     expect(a.songs.first).to be_a(Song)
   end
+
+  describe 'serializer' do
+    let(:subject) { create :artist, :with_songs, :with_albums }
+    let(:serialized) { ArtistSerializer.new(subject).as_json }
+    context 'has field' do
+      it 'name' do
+        expect(serialized[:name]).to_not be_nil
+      end
+      it 'bio' do
+        expect(serialized[:bio]).to_not be_nil
+      end
+      it 'songs' do
+        expect(serialized[:songs]).to respond_to(:each)
+        expect(serialized[:songs].first[:id]).to_not be_nil
+      end
+      it 'albums' do
+        expect(serialized[:albums]).to respond_to(:each)
+        expect(serialized[:albums].first[:id]).to_not be_nil
+      end
+    end
+  end
 end

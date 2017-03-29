@@ -38,4 +38,21 @@ RSpec.describe Album, type: :model do
       expect(album).to_not be_valid
     end
   end
+
+  describe 'serializer' do
+    let(:subject) { create :album, :with_songs, :with_art }
+    let(:serialized) { AlbumSerializer.new(subject).as_json }
+    context 'has field' do
+      it 'name' do
+        expect(serialized[:name]).to_not be_nil
+      end
+      it 'songs' do
+        expect(serialized[:songs]).to respond_to(:each)
+        expect(serialized[:songs].first[:id]).to_not be_nil
+      end
+      it 'art' do
+        expect(serialized[:art][:id]).to_not be_nil
+      end
+    end
+  end
 end

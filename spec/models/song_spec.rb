@@ -105,4 +105,29 @@ RSpec.describe Song, type: :model do
       expect(song).to be_valid
     end
   end
+
+  describe 'serializer' do
+    let(:subject) { create :song, :rock, :with_album, :is_featured }
+    let(:serialized) { SongSerializer.new(subject).as_json }
+    context 'has field' do
+      it 'name' do
+        expect(serialized[:name]).to_not be_nil
+      end
+      it 'duration' do
+        expect(serialized[:duration]).to_not be_nil
+      end
+      it 'show_artist' do
+        expect(serialized[:show_artist][:id]).to_not be_nil
+      end
+      it 'album' do
+        expect(serialized[:album][:id]).to_not be_nil
+      end
+      it 'featured history' do
+        expect(serialized[:featured][:history]).to_not be_nil
+      end
+      it 'featured art' do
+        expect(serialized[:featured][:art][:id]).to_not be_nil
+      end
+    end
+  end
 end
